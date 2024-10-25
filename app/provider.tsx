@@ -8,6 +8,7 @@ function Provider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     user && VerifyUser();
+    console.log(user);
   }, [user]);
 
   const VerifyUser = async () => {
