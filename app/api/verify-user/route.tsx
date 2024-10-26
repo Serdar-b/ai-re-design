@@ -3,14 +3,16 @@ import { usersTable } from "@/db/schema";
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 
+/*
+ * Add user to database if they do not exist
+ */
 export async function POST(req: Request) {
   const { user } = await req.json();
   try {
-    // Check if the user already exists
     const result = await db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.email, user?.primaryEmailAddress.emailAddresses));
+      .where(eq(usersTable.email, user?.primaryEmailAddress.emailAddress));
 
     if (result.length === 0) {
       // Insert the new user if not found
@@ -18,10 +20,15 @@ export async function POST(req: Request) {
         .insert(usersTable)
         .values({
           name: user?.fullName,
-          email: user?.primaryEmailAddress.emailAddresses,
+          email: user?.primaryEmailAddress.emailAddress,
           imageURL: user?.imageUrl,
         })
-        .returning();
+        .returning({
+          id: usersTable.id,
+          name: usersTable.name,
+          email: usersTable.email,
+          imageURL: usersTable.imageURL,
+        });
 
       return NextResponse.json({ result: userResult });
     } else {
