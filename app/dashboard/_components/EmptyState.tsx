@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 function EmptyState() {
@@ -9,7 +10,9 @@ function EmptyState() {
       <h2 className="font-medium text-lg text-gray-500">
         Create New AI Interior Design For Your Room
       </h2>
-      <Button className="mt-5">+ Redesign Room</Button>
+      <Link href={"/dashboard/create-new"}>
+        <Button className="mt-5">+ Redesign Room</Button>
+      </Link>
     </div>
   );
 }
