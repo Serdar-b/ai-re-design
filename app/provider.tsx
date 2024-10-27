@@ -2,21 +2,41 @@
 import { useUser } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { UserDetailContext, UserDetail } from "./_context/userDetailContext";
+import { UserDetailContext } from "./_context/userDetailContext";
+
+export interface UserDetail {
+  id: number;
+  name: string;
+  email: string;
+  imageURL: string;
+  credits: number;
+}
+
+const defaultUserDetail: UserDetail = {
+  id: 0,
+  name: "",
+  email: "",
+  imageURL: " ",
+  credits: 0,
+};
 
 function Provider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
-  const [userDetail, setUserDetail] = useState<UserDetail[]>([]);
+  const [userDetail, setUserDetail] = useState<UserDetail>(defaultUserDetail);
 
   useEffect(() => {
-    user && VerifyUser();
+    if (user) VerifyUser();
   }, [user]);
 
   const VerifyUser = async () => {
-    const dataResult = await axios.post("/api/verify-user", {
-      user: user,
-    });
-    setUserDetail(dataResult.data.result);
+    try {
+      const dataResult = await axios.post("/api/verify-user", {
+        user: user,
+      });
+      setUserDetail(dataResult.data.result);
+    } catch (error) {
+      console.error("Error in VerifyUser:", error);
+    }
   };
 
   return (

@@ -28,12 +28,14 @@ export async function POST(req: Request) {
           name: usersTable.name,
           email: usersTable.email,
           imageURL: usersTable.imageURL,
+          credits: usersTable.credits,
         });
 
-      return NextResponse.json({ result: userResult });
+      return NextResponse.json({ result: userResult[0] });
     } else {
       // Handle case when the user already exists
-      return NextResponse.json({ message: "User already exists" });
+
+      return NextResponse.json({ result: result[0] });
     }
   } catch (error) {
     // Error handling
