@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 import ImageSelection from "./_components/ImageSelection";
+import RoomType from "./_components/RoomType";
+import DesignType from "./_components/DesignType";
 
 function CreateNew() {
-  const onHandleInputChange = (_value: File, fieldName: string) => {};
+  const onHandleInputChange = (value: File | string, fieldName: string) => {};
 
   return (
     <div>
@@ -14,10 +16,16 @@ function CreateNew() {
         Transform any room with a click. Select a space, choose a style and
         watch as AI instantly reimagines your envvironment.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 mt-10 gap-10">
         <ImageSelection
           selectedImage={(value) => onHandleInputChange(value, "image")}
         />
+        <div>
+          <RoomType
+            selectedRoomType={(value) => onHandleInputChange(value, "roomType")}
+          />
+          <DesignType selectedDesignType={(value) => onHandleInputChange(value, "designType")} />
+        </div>
       </div>
     </div>
   );
