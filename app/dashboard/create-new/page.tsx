@@ -1,15 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import ImageSelection from "./_components/ImageSelection";
 import RoomType from "./_components/RoomType";
 import DesignType from "./_components/DesignType";
 import AdditionalReq from "./_components/AdditionalReq";
+import { Button } from "@/components/ui/button";
 
 function CreateNew() {
+  const [formData, setFormData] = useState([]);
+
   const onHandleInputChange = (
     value: File | string | React.ChangeEvent<HTMLTextAreaElement>,
     fieldName: string
-  ) => {};
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [fieldName]: value,
+    }));
+  };
 
   return (
     <div>
@@ -38,6 +46,10 @@ function CreateNew() {
               onHandleInputChange(value, "additionalReq")
             }
           />
+          <Button className="w-full mt-5">Generate</Button>
+          <p className="text-sm text-grey-400 mb-52 mt-3">
+            NOTE: 1 Credit will be used to redesign your room!
+          </p>
         </div>
       </div>
     </div>
