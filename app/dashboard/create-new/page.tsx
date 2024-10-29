@@ -3,9 +3,13 @@ import React from "react";
 import ImageSelection from "./_components/ImageSelection";
 import RoomType from "./_components/RoomType";
 import DesignType from "./_components/DesignType";
+import AdditionalReq from "./_components/AdditionalReq";
 
 function CreateNew() {
-  const onHandleInputChange = (value: File | string, fieldName: string) => {};
+  const onHandleInputChange = (
+    value: File | string | React.ChangeEvent<HTMLTextAreaElement>,
+    fieldName: string
+  ) => {};
 
   return (
     <div>
@@ -24,7 +28,16 @@ function CreateNew() {
           <RoomType
             selectedRoomType={(value) => onHandleInputChange(value, "roomType")}
           />
-          <DesignType selectedDesignType={(value) => onHandleInputChange(value, "designType")} />
+          <DesignType
+            selectedDesignType={(value) =>
+              onHandleInputChange(value, "designType")
+            }
+          />
+          <AdditionalReq
+            additionalRequirementsInput={(value) =>
+              onHandleInputChange(value, "additionalReq")
+            }
+          />
         </div>
       </div>
     </div>
